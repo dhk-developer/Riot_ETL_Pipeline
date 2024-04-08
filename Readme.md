@@ -18,6 +18,8 @@
 
 <pre><code>pip install pandas matplotlib seaborn mysql-connector-python</code></pre>
 
+<p>You will also be required to set-up a dotenv file - this should contain the DEFAULT_REGION and API_KEY. If you will not use the .json files already provided, please ensure you set-up a TIME_SLEEP as Riot limits API calls to 100 per 2 minutes.</p>
+
 <h2>Data Sources</h2>
 
 <p>2020 data is sourced from the CSV in the main directory. 2024 data is requested from the Riot API using a free developer key.</p>
