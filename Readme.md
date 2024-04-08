@@ -20,12 +20,8 @@
 
 <h2>Data Sources</h2>
 
-<p>The data is sourced from two CSV files:</p>
+<p>2020 data is sourced from the CSV in the main directory. 2024 data is requested from the Riot API using a free developer key.</p>
 
-<ul>
-    <li><strong>gamestats_2020.csv</strong>: Game statistics for the year 2020</li>
-    <li><strong>gamestats_2024.csv</strong>: Game statistics for the year 2024</li>
-</ul>
 
 <h2>Features</h2>
 
@@ -58,10 +54,3 @@
 
 <pre><code>__main__.py</code></pre>
 
-<h2>Contributing</h2>
-
-<p>Feel free to contribute to this project by creating pull requests or opening issues.</p>
-
-<h2>License</h2>
-
-<p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
