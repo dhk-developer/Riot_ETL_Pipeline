@@ -1,58 +1,36 @@
-<h1>Riot Games Data Analysis</h1>
+# League of Legends data study: what wins games, 2020 against 2024
 
-<p>This repository contains tools and scripts for analyzing data related to Riot Games, particularly game statistics for the years 2020 and 2024.</p>
+An assessed data project from my 2024 technical training. **Question:** which in-game factors correlate most with winning, and did that change between 2020 and 2024?
 
-<h2>Requirements</h2>
+Full write-up: [case study](https://dhk-developer.github.io/work/riot-analysis/) · the method and results are in [`Assessment.ipynb`](Assessment.ipynb).
 
-<ul>
-    <li>Python 3.x</li>
-    <li>Pandas</li>
-    <li>Matplotlib</li>
-    <li>Seaborn</li>
-    <li>MySQL</li>
-</ul>
+## Method
 
-<h2>Getting Started</h2>
+| Step | 2020 | 2024 |
+|---|---|---|
+| Source | Public dataset: ≈9,900 high-rank games, **first 10 minutes** (`high_diamond_ranked_10min.csv`) | Riot Games API: top-ladder players → match IDs → match detail |
+| Constraint | n/a | Free developer key: **100 requests per 2 minutes**, so requests were throttled and each stage cached to JSON (`*_cache.json`) |
+| Transform | Drop redundant and collinear columns after a correlation check | Rebuild blue-side team features from participant-level JSON to match the 2020 schema; add newer objectives |
+| Load | MySQL via SQLAlchemy (`tables/gamestats_2020.csv` export) | MySQL via SQLAlchemy (`tables/gamestats_2024.csv` export) |
+| Analyse | Correlation with winning; averages | Same |
 
-<p>Before running any scripts, ensure you have the required Python libraries installed. You can install them using pip:</p>
+3,000 requested games produced **1,847 unique matches**, because top-ladder players keep meeting each other.
 
-<pre><code>pip install pandas matplotlib seaborn mysql-connector-python</code></pre>
+## Findings
 
-<p>You will also be required to set-up a dotenv file - this should contain the DEFAULT_REGION and API_KEY. If you will not use the .json files already provided, please ensure you set-up a TIME_SLEEP as Riot limits API calls to 100 per 2 minutes.</p>
+- Dragons and turrets correlate much more strongly with winning in 2024, consistent with patch changes (permanent dragon buffs, turret bounties).
+- First blood matters less, consistent with comeback mechanics.
+- Vision stays weakly correlated in both years.
 
-<h2>Data Sources</h2>
+## Limitations
 
-<p>2020 data is sourced from the CSV in the main directory. 2024 data is requested from the Riot API using a free developer key.</p>
+- **Not like-for-like:** the 2020 data covers the first ten minutes only, while the API returns whole games. Correlations are informative, but magnitudes are not comparable.
+- **Repository scope:** this repository contains the notebook, cached data, exported tables and the account and match-ID request modules (`routes/`). Some supporting code described in the notebook (the league lookup and the throttling and cache helpers) is not in this commit, so the notebook is the record of the method.
 
+## Running
 
-<h2>Features</h2>
+```bash
+pip install pandas matplotlib seaborn sqlalchemy mysql-connector-python requests python-dotenv
+```
 
-<h3>Data Cleaning</h3>
-
-<p>Various data cleaning operations were performed:</p>
-
-<ul>
-    <li>Removing unwanted columns</li>
-    <li>Handling missing values</li>
-</ul>
-
-<h3>Data Analysis</h3>
-
-<p>Statistical analysis was performed to:</p>
-
-<ul>
-    <li>Calculate average values for each column</li>
-    <li>Compare statistics between the years 2020 and 2024</li>
-    <li>Visualize the comparison using bar plots</li>
-</ul>
-
-<h3>Database Operations</h3>
-
-<p>Data was stored and retrieved from a MySQL database using Python.</p>
-
-<h2>Usage</h2>
-
-<p>Run the following scripts to perform the respective tasks:</p>
-
-<pre><code>__main__.py</code></pre>
-
+Create a `.env` with `API_KEY` (a Riot developer key) and `DEFAULT_REGION`. The notebook reads the cached JSON by default, so it runs without calling the API. The database URL in the notebook points to a local MySQL instance; change it to your own.
