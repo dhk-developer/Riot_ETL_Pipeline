@@ -2,7 +2,7 @@
 
 An assessed data project from my 2024 technical training. **Question:** which in-game factors correlate most with winning, and did that change between 2020 and 2024?
 
-Full write-up: [case study](https://dhk-developer.github.io/work/riot-analysis/) · the method and results are in [`Assessment.ipynb`](Assessment.ipynb).
+Full write-up: [dhk-developer.github.io/riot-analysis.html](https://dhk-developer.github.io/riot-analysis.html) · the method and results are in [`Assessment.ipynb`](Assessment.ipynb).
 
 ## Method
 
